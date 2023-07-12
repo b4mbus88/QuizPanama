@@ -66,8 +66,8 @@ const questions = [
   let currentQuestionIndex = 0;
   let punkte = 0;
   
-  // Funktion zum Laden einer Frage
-  function loadQuestion() {
+// Funktion zum Laden einer Frage
+function loadQuestion() {
     const questionElement = document.getElementById("question");
     const optionsContainer = document.getElementById("options");
   
@@ -85,7 +85,7 @@ const questions = [
   
       // Event Listener für Auswahl der Optionen
       button.addEventListener("click", function () {
-        checkAnswer(index);
+        checkAnswer(index, button);
       });
     });
   
@@ -94,24 +94,32 @@ const questions = [
   }
   
   // Funktion zum Überprüfen der Antwort
-  function checkAnswer(selectedIndex) {
+  function checkAnswer(selectedIndex, selectedButton) {
     const currentQuestion = questions[currentQuestionIndex];
   
     if (selectedIndex === currentQuestion.answer) {
-      alert("Richtig!");
-      punkte = punkte + 1;
+      selectedButton.classList.add("correct");
     } else {
-      alert("Falsch!");
+      selectedButton.classList.add("incorrect");
     }
   
+  // Event Listener entfernen, um weitere Klicks zu verhindern
+  const optionButtons = document.querySelectorAll('.option');
+  optionButtons.forEach(function(button) {
+    button.removeEventListener('click', checkAnswer);
+  });
+
+  // Verzögerung für den nächsten Fragewechsel
+  setTimeout(function() {
     // Nächste Frage laden oder Spiel beenden
     currentQuestionIndex++;
     if (currentQuestionIndex < questions.length) {
       loadQuestion();
     } else {
-      alert("Quiz beendet! Ihr habt " + punkte + " erreicht!");
+      alert("Quiz beendet!");
     }
-  }
-  
-  // Quiz starten
-  loadQuestion();
+  }, 3000); // Wartezeit in Millisekunden (hier: 1 Sekunde)
+}
+
+// Quiz starten
+loadQuestion();
