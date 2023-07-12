@@ -64,6 +64,7 @@ const questions = [
   ];
   
   let currentQuestionIndex = 0;
+  let punkte = 0;
   
   // Funktion zum Laden einer Frage
   function loadQuestion() {
@@ -98,6 +99,7 @@ const questions = [
   
     if (selectedIndex === currentQuestion.answer) {
       alert("Richtig!");
+      punkte = punkte + 1;
     } else {
       alert("Falsch!");
     }
@@ -107,7 +109,7 @@ const questions = [
     if (currentQuestionIndex < questions.length) {
       loadQuestion();
     } else {
-      alert("Quiz beendet!");
+      alert("Quiz beendet! Ihr habt " + punkte + " erreicht!");
     }
   }
   
