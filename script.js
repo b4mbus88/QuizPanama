@@ -1,6 +1,12 @@
 // Fragen und Antworten definieren
 const questions = [
     {
+      question: "Welche Farben beinhaltet die Flagge Panamas?",
+      options: ["Blau, Rot, Weiß", "Gelb, Weiß, Rot", "Blau, Weiß, Gelb", "Gelb, Rot, Weiß"],
+      answer: 0, // Index der korrekten Antwort (0-basiert)
+      background: "url(bild11.jpg)" // Pfad zum Hintergrundbild
+    },
+    {
       question: "Welcher berühmte Regenwald erstreckt sich über einen großen Teil Panamas?",
       options: ["Amazonas-Regenwald", "Regenwald-Darién", "Borneo-Regenwald", "Kongobecken-Regenwald"],
       answer: 1, // Index der korrekten Antwort (0-basiert)
@@ -23,6 +29,12 @@ const questions = [
         options: ["Santa Catalina", "Copacabana-Strand", "Bondi Beach", "Zuma Beach"],
         answer: 0,
         background: "url(bild4.jpg)"
+    },
+    {
+      question: "Wieviele Einwohner hat Panama?",
+      options: ["3,7", "4,0", "4,3", "4,8"],
+      answer: 0, // Index der korrekten Antwort (0-basiert)
+      background: "url(bild12.jpg)" // Pfad zum Hintergrundbild
     },
     {
         question: "Welche bekannte Inselgruppe vor der Küste Panamas ist für ihre weißen Sandstrände und klaren Gewässer bekannt?",
@@ -99,6 +111,7 @@ function loadQuestion() {
   
     if (selectedIndex === currentQuestion.answer) {
       selectedButton.classList.add("correct");
+      punkte++;
     } else {
       selectedButton.classList.add("incorrect");
     }
@@ -116,9 +129,9 @@ function loadQuestion() {
     if (currentQuestionIndex < questions.length) {
       loadQuestion();
     } else {
-      alert("Quiz beendet!");
+      alert("Quiz beendet! Ihr habt " + punkte + " gesammelt!");
     }
-  }, 3000); // Wartezeit in Millisekunden (hier: 1 Sekunde)
+  }, 1000); // Wartezeit in Millisekunden (hier: 1 Sekunde)
 }
 
 // Quiz starten
