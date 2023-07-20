@@ -33,7 +33,7 @@ const questions = [
     {
       question: "Wieviele Einwohner hat Panama?",
       options: ["3,7", "4,0", "4,3", "4,8"],
-      answer: 0, // Index der korrekten Antwort (0-basiert)
+      answer: 2, // Index der korrekten Antwort (0-basiert)
       background: "url(bild12.jpg)" // Pfad zum Hintergrundbild
     },
     {
