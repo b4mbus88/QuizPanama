@@ -77,61 +77,60 @@ const questions = [
   
   let currentQuestionIndex = 0;
   let punkte = 0;
-  
+// Funktion zum Überprüfen der Antwort
+function checkAnswer(selectedIndex, selectedButton) {
+  const currentQuestion = questions[currentQuestionIndex];
+
+  if (selectedIndex === currentQuestion.answer) {
+    selectedButton.classList.add("correct");
+    punkte++;
+
+    // Event Listener entfernen, um weitere Klicks zu verhindern
+    const optionButtons = document.querySelectorAll('.option');
+    optionButtons.forEach(function(button) {
+      button.removeEventListener('click', checkAnswer);
+    });
+
+    // Verzögerung für den nächsten Fragewechsel
+    setTimeout(function() {
+      // Nächste Frage laden oder Spiel beenden
+      currentQuestionIndex++;
+      if (currentQuestionIndex < questions.length) {
+        loadQuestion();
+      } else {
+        alert("Quiz beendet!");
+      }
+    }, 1000); // Wartezeit in Millisekunden (hier: 1 Sekunde)
+  } else {
+    selectedButton.classList.add("incorrect");
+  }
+}
+
 // Funktion zum Laden einer Frage
 function loadQuestion() {
-    const questionElement = document.getElementById("question");
-    const optionsContainer = document.getElementById("options");
-  
-    // Frage und Antwortoptionen aktualisieren
-    const currentQuestion = questions[currentQuestionIndex];
-    questionElement.textContent = currentQuestion.question;
-  
-    // Antwortoptionen erstellen
-    optionsContainer.innerHTML = ""; // Vorherige Optionen löschen
-    currentQuestion.options.forEach(function (option, index) {
-      const button = document.createElement("button");
-      button.classList.add("option");
-      button.textContent = option;
-      optionsContainer.appendChild(button);
-  
-      // Event Listener für Auswahl der Optionen
-      button.addEventListener("click", function () {
-        checkAnswer(index, button);
-      });
+  const questionElement = document.getElementById("question");
+  const optionsContainer = document.getElementById("options");
+
+  // Frage und Antwortoptionen aktualisieren
+  const currentQuestion = questions[currentQuestionIndex];
+  questionElement.textContent = currentQuestion.question;
+
+  // Antwortoptionen erstellen
+  optionsContainer.innerHTML = ""; // Vorherige Optionen löschen
+  currentQuestion.options.forEach(function (option, index) {
+    const button = document.createElement("button");
+    button.classList.add("option");
+    button.textContent = option;
+    optionsContainer.appendChild(button);
+
+    // Event Listener für Auswahl der Optionen
+    button.addEventListener("click", function () {
+      checkAnswer(index, button);
     });
-  
-    // Hintergrundbild aktualisieren
-    document.body.style.backgroundImage = currentQuestion.background;
-  }
-  
-  // Funktion zum Überprüfen der Antwort
-  function checkAnswer(selectedIndex, selectedButton) {
-    const currentQuestion = questions[currentQuestionIndex];
-  
-    if (selectedIndex === currentQuestion.answer) {
-      selectedButton.classList.add("correct");
-      punkte++;
-    } else {
-      selectedButton.classList.add("incorrect");
-    }
-  
-  // Event Listener entfernen, um weitere Klicks zu verhindern
-  const optionButtons = document.querySelectorAll('.option');
-  optionButtons.forEach(function(button) {
-    button.removeEventListener('click', checkAnswer);
   });
 
-  // Verzögerung für den nächsten Fragewechsel
-  setTimeout(function() {
-    // Nächste Frage laden oder Spiel beenden
-    currentQuestionIndex++;
-    if (currentQuestionIndex < questions.length) {
-      loadQuestion();
-    } else {
-      alert("Quiz beendet! Ihr habt " + punkte + " gesammelt!");
-    }
-  }, 1000); // Wartezeit in Millisekunden (hier: 1 Sekunde)
+  // Hintergrundbild aktualisieren
+  document.body.style.backgroundImage = currentQuestion.background;
 }
 
 // Quiz starten
